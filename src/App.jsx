@@ -1,35 +1,63 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+function FilterableProductTable() {
+  const productsTest = [
+    { category: "Fruits", price: "$1", stocked: true, name: "Apple" },
+    { category: "Fruits", price: "$1", stocked: true, name: "Dragonfruit" },
+    { category: "Fruits", price: "$2", stocked: false, name: "Passionfruit" },
+    { category: "Vegetables", price: "$2", stocked: true, name: "Spinach" },
+    { category: "Vegetables", price: "$4", stocked: false, name: "Pumpkin" },
+    { category: "Vegetables", price: "$1", stocked: true, name: "Peas" }
+  ];
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <ProductTable products={productsTest} />
     </>
-  )
+  );
 }
 
-export default App
+function ProductCategoryRow({ category }) {
+  return (
+    <div class="product-category-row">
+      {category}
+    </div>
+  );
+}
+
+function ProductRow({ productName, price, stocked }) {
+  return (
+    <>
+      <div class="product-row">
+        <span>{productName}</span>
+        <span>{price}</span>
+      </div>
+    </>
+  );
+}
+
+function ProductTable({ products }) {
+  let rows = [];
+
+  let fruits = products.filter(p => p.category === "Fruits"); // vettore con solo frutta
+  let vegetables = products.filter(p => p.category === "Vegetables"); // vettore con solo verdura
+
+  rows.push(<ProductCategoryRow category={"Fruits"} />); // metti l'header frutta
+  fruits.forEach(p => rows.push(<ProductRow productName={p.name} price={p.price} stock={p.stocked} />)); // metti ogni frutto
+
+  rows.push(<ProductCategoryRow category={"Vegetables"} />); // metti l'header verdura
+  vegetables.forEach(p => rows.push(<ProductRow productName={p.name} price={p.price} stock={p.stocked} />)); // metti ogni verdura
+
+  return (
+    <div class="product-table">
+      <div class="product-table-header">
+        <span>Name</span>
+        <span>Price</span>
+      </div>
+      {rows}
+    </div>
+  );
+}
+
+export default FilterableProductTable
