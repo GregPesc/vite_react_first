@@ -13,28 +13,24 @@ function FilterableProductTable() {
 
   return (
     <>
+      <SearchBar />
       <ProductTable products={productsTest} />
     </>
   );
 }
 
-function ProductCategoryRow({ category }) {
-  return (
-    <div class="product-category-row">
-      {category}
-    </div>
-  );
-}
-
-function ProductRow({ productName, price, stocked }) {
+function SearchBar() {
   return (
     <>
-      <div class="product-row">
-        <span>{productName}</span>
-        <span>{price}</span>
+      <div className='search-bar'>
+        <input type="text" id="search" placeholder="Search..." />
+        <label>
+          <input type="checkbox" id="instock" />
+          Only show products in stock
+        </label>
       </div>
     </>
-  );
+  )
 }
 
 function ProductTable({ products }) {
@@ -50,13 +46,36 @@ function ProductTable({ products }) {
   vegetables.forEach(p => rows.push(<ProductRow productName={p.name} price={p.price} stocked={p.stocked} />)); // metti ogni verdura
 
   return (
-    <div class="product-table">
-      <div class="product-table-header">
+    <div className="product-table">
+      <div className="product-table-header">
         <span>Name</span>
         <span>Price</span>
       </div>
       {rows}
     </div>
+  );
+}
+
+function ProductCategoryRow({ category }) {
+  return (
+    <div className="product-category-row">
+      {category}
+    </div>
+  );
+}
+
+function ProductRow({ productName, price, stocked }) {
+  if (stocked === false) {
+    productName = <span className="out-of-stock">{productName}</span>
+  }
+
+  return (
+    <>
+      <div className="product-row">
+        <span>{productName}</span>
+        <span>{price}</span>
+      </div>
+    </>
   );
 }
 
