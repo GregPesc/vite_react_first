@@ -44,10 +44,10 @@ function ProductTable({ products }) {
   let vegetables = products.filter(p => p.category === "Vegetables"); // vettore con solo verdura
 
   rows.push(<ProductCategoryRow category={"Fruits"} />); // metti l'header frutta
-  fruits.forEach(p => rows.push(<ProductRow productName={p.name} price={p.price} stock={p.stocked} />)); // metti ogni frutto
+  fruits.forEach(p => rows.push(<ProductRow productName={p.name} price={p.price} stocked={p.stocked} />)); // metti ogni frutto
 
   rows.push(<ProductCategoryRow category={"Vegetables"} />); // metti l'header verdura
-  vegetables.forEach(p => rows.push(<ProductRow productName={p.name} price={p.price} stock={p.stocked} />)); // metti ogni verdura
+  vegetables.forEach(p => rows.push(<ProductRow productName={p.name} price={p.price} stocked={p.stocked} />)); // metti ogni verdura
 
   return (
     <div class="product-table">
