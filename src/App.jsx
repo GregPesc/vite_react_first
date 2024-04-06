@@ -2,6 +2,10 @@ import { useState } from 'react'
 import './App.css'
 
 function FilterableProductTable() {
+
+  const [filterText, setFilterText] = useState('');
+  const [inStockOnly, setInStockOnly] = useState(false);
+
   const productsTest = [
     { category: "Fruits", price: "$1", stocked: true, name: "Apple" },
     { category: "Fruits", price: "$1", stocked: true, name: "Dragonfruit" },
@@ -30,10 +34,11 @@ function SearchBar() {
         </label>
       </div>
     </>
-  )
+  );
 }
 
 function ProductTable({ products }) {
+
   let rows = [];
 
   let fruits = products.filter(p => p.category === "Fruits"); // vettore con solo frutta
@@ -65,6 +70,7 @@ function ProductCategoryRow({ category }) {
 }
 
 function ProductRow({ productName, price, stocked }) {
+
   if (stocked === false) {
     productName = <span className="out-of-stock">{productName}</span>
   }
