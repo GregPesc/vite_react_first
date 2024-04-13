@@ -17,13 +17,13 @@ function FilterableProductTable() {
 
   return (
     <>
-      <SearchBar />
-      <ProductTable products={productsTest} />
+      <SearchBar filterText={filterText} inStockOnly={inStockOnly} />
+      <ProductTable products={productsTest} filterText={filterText} inStockOnly={inStockOnly} />
     </>
   );
 }
 
-function SearchBar() {
+function SearchBar({ filterText, inStockOnly }) {
   return (
     <>
       <div className='search-bar'>
@@ -37,7 +37,7 @@ function SearchBar() {
   );
 }
 
-function ProductTable({ products }) {
+function ProductTable({ products, filterText, inStockOnly }) {
 
   let rows = [];
 
@@ -53,8 +53,8 @@ function ProductTable({ products }) {
   return (
     <div className="product-table">
       <div className="product-table-header">
-        <span>Name</span>
-        <span>Price</span>
+        <span className='name-header'>Name</span>
+        <span className='price-header'>Price</span>
       </div>
       {rows}
     </div>
@@ -78,8 +78,8 @@ function ProductRow({ productName, price, stocked }) {
   return (
     <>
       <div className="product-row">
-        <span>{productName}</span>
-        <span>{price}</span>
+        <span className='name'>{productName}</span>
+        <span className='price'>{price}</span>
       </div>
     </>
   );
