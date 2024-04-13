@@ -16,20 +16,40 @@ function FilterableProductTable() {
   ];
 
   return (
-    <>
-      <SearchBar filterText={filterText} inStockOnly={inStockOnly} />
-      <ProductTable products={productsTest} filterText={filterText} inStockOnly={inStockOnly} />
-    </>
+    <div className='filterable-product-table'>
+      <SearchBar
+        filterText={filterText}
+        inStockOnly={inStockOnly}
+        onFilterTextChange={setFilterText}
+        onInStockOnlyChange={setInStockOnly}
+      />
+      <ProductTable
+        products={productsTest}
+        filterText={filterText}
+        inStockOnly={inStockOnly}
+      />
+    </div>
   );
 }
 
-function SearchBar({ filterText, inStockOnly }) {
+function SearchBar({ filterText, inStockOnly, onFilterTextChange, onInStockOnlyChange }) {
   return (
     <>
       <div className='search-bar'>
-        <input type="text" id="search" placeholder="Search..." />
+        <input
+          type="text"
+          id="search"
+          placeholder="Search..."
+          value={filterText}
+          onChange={(e) => onFilterTextChange(e.target.value)}
+        />
         <label>
-          <input type="checkbox" id="instock" />
+          <input
+            type="checkbox"
+            id="instock"
+            checked={inStockOnly}
+            onChange={(e) => onInStockOnlyChange(e.target.checked)}
+          />
           Only show products in stock
         </label>
       </div>
@@ -40,6 +60,14 @@ function SearchBar({ filterText, inStockOnly }) {
 function ProductTable({ products, filterText, inStockOnly }) {
 
   let rows = [];
+
+  if (inStockOnly) {
+    products = products.filter(p => p.stocked === true); // tieni solo prodotti in stock
+  }
+
+  if (filterText !== '') {
+    products = products.filter(p => p.name.toLowerCase().includes(filterText.toLowerCase())); // tieni solo prodotti che contengono filterText
+  }
 
   let fruits = products.filter(p => p.category === "Fruits"); // vettore con solo frutta
   let vegetables = products.filter(p => p.category === "Vegetables"); // vettore con solo verdura

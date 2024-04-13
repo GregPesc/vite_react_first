@@ -11,6 +11,7 @@ body {
 }
 
 /* Sfondo leggermente grigio per ridurre il contrasto */
+.filterable-product-table,
 .search-bar,
 .product-table {
   background-color: #f7f7f7;
