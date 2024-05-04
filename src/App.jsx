@@ -19,8 +19,8 @@ function FilterableProductTable() {
 
     const intervalId = setInterval(fetchData, 5000);  // Aggiorna i dati ogni 5 secondi
 
-    return () => clearInterval(intervalId);  // Pulizia: rimuove l"intervallo quando il componente viene smontato
-  }, []);  // Le parentesi quadre vuote indicano che questo effetto non ha dipendenze e viene eseguito solo al montaggio
+    return () => clearInterval(intervalId);  // Pulizia: rimuove l'intervallo quando il componente viene smontato
+  }, []);  // array vuoto = questo effetto non ha dipendenze e viene eseguito solo al montaggio
 
   return (
     <div className="filterable-product-table">
@@ -79,10 +79,10 @@ function ProductTable({ products, filterText, inStockOnly }) {
   let fruits = products.filter(p => p.category === "Fruits"); // vettore con solo frutta
   let vegetables = products.filter(p => p.category === "Vegetables"); // vettore con solo verdura
 
-  rows.push(<ProductCategoryRow category={"Fruits"} />); // metti l"header frutta
+  rows.push(<ProductCategoryRow category={"Fruits"} />); // metti l'header frutta
   fruits.forEach(p => rows.push(<ProductRow productName={p.name} price={p.price} stocked={p.stocked} />)); // metti ogni frutto
 
-  rows.push(<ProductCategoryRow category={"Vegetables"} />); // metti l"header verdura
+  rows.push(<ProductCategoryRow category={"Vegetables"} />); // metti l'header verdura
   vegetables.forEach(p => rows.push(<ProductRow productName={p.name} price={p.price} stocked={p.stocked} />)); // metti ogni verdura
 
   return (
