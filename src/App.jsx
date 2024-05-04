@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
-import './App.css'
+import { useState, useEffect } from "react"
+import "./App.css"
 
 function FilterableProductTable() {
 
-  const [filterText, setFilterText] = useState('');
+  const [filterText, setFilterText] = useState("");
   const [inStockOnly, setInStockOnly] = useState(false);
   const [products, setProducts] = useState([]);
 
@@ -12,18 +12,18 @@ function FilterableProductTable() {
       fetch("http://172.18.2.165:3000/list")
         .then(response => response.json())
         .then(data => setProducts(data))
-        .catch(error => console.error('Error fetching data: ', error));
+        .catch(error => console.error("Error fetching data: ", error));
     };
 
     fetchData();  // Esegui immediatamente la prima volta
 
     const intervalId = setInterval(fetchData, 5000);  // Aggiorna i dati ogni 5 secondi
 
-    return () => clearInterval(intervalId);  // Pulizia: rimuove l'intervallo quando il componente viene smontato
+    return () => clearInterval(intervalId);  // Pulizia: rimuove l"intervallo quando il componente viene smontato
   }, []);  // Le parentesi quadre vuote indicano che questo effetto non ha dipendenze e viene eseguito solo al montaggio
 
   return (
-    <div className='filterable-product-table'>
+    <div className="filterable-product-table">
       <SearchBar
         filterText={filterText}
         inStockOnly={inStockOnly}
@@ -42,7 +42,7 @@ function FilterableProductTable() {
 function SearchBar({ filterText, inStockOnly, onFilterTextChange, onInStockOnlyChange }) {
   return (
     <>
-      <div className='search-bar'>
+      <div className="search-bar">
         <input
           type="text"
           id="search"
@@ -72,24 +72,24 @@ function ProductTable({ products, filterText, inStockOnly }) {
     products = products.filter(p => p.stocked === true); // tieni solo prodotti in stock
   }
 
-  if (filterText !== '') {
+  if (filterText !== "") {
     products = products.filter(p => p.name.toLowerCase().includes(filterText.toLowerCase())); // tieni solo prodotti che contengono filterText
   }
 
   let fruits = products.filter(p => p.category === "Fruits"); // vettore con solo frutta
   let vegetables = products.filter(p => p.category === "Vegetables"); // vettore con solo verdura
 
-  rows.push(<ProductCategoryRow category={"Fruits"} />); // metti l'header frutta
+  rows.push(<ProductCategoryRow category={"Fruits"} />); // metti l"header frutta
   fruits.forEach(p => rows.push(<ProductRow productName={p.name} price={p.price} stocked={p.stocked} />)); // metti ogni frutto
 
-  rows.push(<ProductCategoryRow category={"Vegetables"} />); // metti l'header verdura
+  rows.push(<ProductCategoryRow category={"Vegetables"} />); // metti l"header verdura
   vegetables.forEach(p => rows.push(<ProductRow productName={p.name} price={p.price} stocked={p.stocked} />)); // metti ogni verdura
 
   return (
     <div className="product-table">
       <div className="product-table-header">
-        <span className='name-header'>Name</span>
-        <span className='price-header'>Price</span>
+        <span className="name-header">Name</span>
+        <span className="price-header">Price</span>
       </div>
       {rows}
     </div>
@@ -113,8 +113,8 @@ function ProductRow({ productName, price, stocked }) {
   return (
     <>
       <div className="product-row">
-        <span className='name'>{productName}</span>
-        <span className='price'>{price}</span>
+        <span className="name">{productName}</span>
+        <span className="price">{price}</span>
       </div>
     </>
   );
