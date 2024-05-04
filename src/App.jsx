@@ -1,19 +1,26 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 function FilterableProductTable() {
 
   const [filterText, setFilterText] = useState('');
   const [inStockOnly, setInStockOnly] = useState(false);
+  const [products, setProducts] = useState([]);
 
-  const productsTest = [
-    { category: "Fruits", price: "$1", stocked: true, name: "Apple" },
-    { category: "Fruits", price: "$1", stocked: true, name: "Dragonfruit" },
-    { category: "Fruits", price: "$2", stocked: false, name: "Passionfruit" },
-    { category: "Vegetables", price: "$2", stocked: true, name: "Spinach" },
-    { category: "Vegetables", price: "$4", stocked: false, name: "Pumpkin" },
-    { category: "Vegetables", price: "$1", stocked: true, name: "Peas" }
-  ];
+  useEffect(() => {
+    const fetchData = () => {
+      fetch("http://172.18.2.165:3000/list")
+        .then(response => response.json())
+        .then(data => setProducts(data))
+        .catch(error => console.error('Error fetching data: ', error));
+    };
+
+    fetchData();  // Esegui immediatamente la prima volta
+
+    const intervalId = setInterval(fetchData, 5000);  // Aggiorna i dati ogni 5 secondi
+
+    return () => clearInterval(intervalId);  // Pulizia: rimuove l'intervallo quando il componente viene smontato
+  }, []);  // Le parentesi quadre vuote indicano che questo effetto non ha dipendenze e viene eseguito solo al montaggio
 
   return (
     <div className='filterable-product-table'>
@@ -24,7 +31,7 @@ function FilterableProductTable() {
         onInStockOnlyChange={setInStockOnly}
       />
       <ProductTable
-        products={productsTest}
+        products={products}
         filterText={filterText}
         inStockOnly={inStockOnly}
       />
